@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.szp.mall.inventory.dao.ProductInventoryMapper">
+    <sql id="FIELDS">
+        id, name, quantity
+    </sql>
+    <select id="selectById" parameterType="Integer" resultType="com.szp.mall.inventory.dataobject.ProductInventory">
+        select
+        <include refid="FIELDS"/>
+        from eshop_inventory
+        where id = #{id}
+    </select>
+
+    <update id="updateProductInventory" parameterType="com.szp.mall.inventory.dataobject.ProductInventory">
+        update eshop_inventory
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="quantity != null">
+                quantity = #{quantity}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <insert id="insertProductInventory" parameterType="com.szp.mall.inventory.dataobject.ProductInventory"  useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        INSERT INTO eshop_inventory
+        (name,quantity)
+            VALUES (#{name}, #{quantity})
+    </insert>
+
+</mapper>
